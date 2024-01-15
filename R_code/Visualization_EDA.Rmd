@@ -1,0 +1,190 @@
+---
+title: "Analyze CRISPRi growth competition data for growth at high CO2 gas feeds"
+author: "Ute Hoffmann (Science For Life Laboratory (KTH), Stockholm, Sweden)"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+    number_sections: true
+  html_document:
+    fig_width: 15
+    fig_height: 8
+    theme: united
+    toc: false
+    number_sections: true
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+require("knitr")
+library(ggplot2)
+library(ggrepel)
+library(ggpubr)
+library(tidyverse)
+library(magrittr)
+library(clusterProfiler)
+library(enrichplot)
+
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+# Aim of the analysis
+
+Basic visualization of CRISPRi data for cultivation with lysine. Data analysis was performed using nf-core-crispriscreen pipeline (https://github.com/MPUSP/nf-core-crispriscreen).
+
+# Analysis
+
+In a first step, the results given by the Nextflow pipeline are loaded.
+
+```{r load-R-data}
+load("../results/fitness/result.Rdata")
+```
+
+## Diagnostic plot to check if control sgRNAs look ok
+
+Several control sgRNAs are included in the CRISPRi library. These control sgRNAs do not target any specific gene and serve as a control.
+
+```{r diagnostic-plot}
+plot_controls_sgRNAs <- DESeq_result_table %>% filter(grepl("ctrl", sgRNA_target)) %>%
+  ggplot(aes(x = time, y = log2FoldChange, color = sgRNA_target)) +
+  geom_line(linewidth = 1) + geom_point(size = 2) + ylim(-5, 5) + facet_wrap(~ condition, ncol = 4)
+print(plot_controls_sgRNAs)
+ggsave("../R_results/plot_control_sgRNAs.pdf", plot=plot_controls_sgRNAs, width=12, height=12, units="cm")
+```
+
+## Add annotation to results tables
+
+In the following, annotation is added to the results table provided by the Nextflow pipeline. Mapping of the sgRNA targets to slr-locus tags is given in this file, downloaded on 24/02/23: https://github.com/m-jahn/R-notebook-crispri-lib/blob/master/sgRNA_library_V2/data/input/mapping_trivial_names.tsv
+The appended annotation is based on Uniprot and Cyanobase, partially edited manually. The table used for annotation was created beginning of 2021. Therefore, it does not include several genes which were only recently characterized.
+For a detailed description of all the columns given in the results tables, consult https://mpusp.github.io/nf-core-crispriscreen/output or https://www.biorxiv.org/content/10.1101/2023.02.13.528328v1.full.pdf+htmls
+
+```{r mapping-locusTags}
+mapping_gene_locus <- read_tsv("../input/2023-02-24_mapping_trivial_names.tsv", show_col_types=FALSE)
+names(mapping_gene_locus) <- c("sgRNA_target", "locus")
+DESeq_result_table <- DESeq_result_table %>% left_join(mapping_gene_locus)
+```
+
+```{r add-annotation}
+annotation <- read_tsv("../input/annotation_locusTags_stand13012021.csv", show_col_types = FALSE)
+annotation_2 <- annotation[,c(1,2,3)]
+names(annotation_2) <- c("locus", "Gene name","Product")
+DESeq_result_table <- DESeq_result_table %>% left_join(annotation_2)
+```
+
+```{r save-annotated-files}
+write_tsv(DESeq_result_table, file="../R_results/annotated_DESeq_result_table.tsv")
+df_reduced_info <- unique(subset(DESeq_result_table, DESeq_result_table$time==8 | DESeq_result_table$time==14)[,c(2,25,26,27,4,20,21,23,24)])
+write_tsv(df_reduced_info, file="../R_results/Reduced_annotated_DESeq_result_table.tsv")
+```
+
+```{r wider-table}
+df_red_wide <- pivot_wider(df_reduced_info, names_from=condition, values_from=c(wmean_fitness, sd_fitness, p_fitness_adj, comb_score))
+write_tsv(df_red_wide, file="../R_results/Wide_DESeq_result_table.tsv")
+```
+
+## Visualization
+
+The weighted mean fitness value combines the values of the different sgRNAs targeting the same gene.
+Fitness-fitness plots were created to identify genes which behave differently when amino acids were added compared to the control cultivation. This was performed separately for ncRNAs and protein-coding genes.
+
+### Protein-coding genes
+
+```{r restructure-df}
+df_reduced <- unique(subset(DESeq_result_table, DESeq_result_table$time==8)[,c(2,4,20)])
+df_red_ncRNAs <- subset(df_reduced, grepl("nc_", df_reduced$sgRNA_target))
+df_red_no_ncRNAs <- subset(df_reduced, !grepl("nc_", df_reduced$sgRNA_target))
+df_red_wide <- pivot_wider(df_red_no_ncRNAs,names_from="condition", values_from=c("wmean_fitness"))
+```
+
+```{r fitness-fitness-plots}
+plot_fitness_fitness <- function(df_input, y_axis, y_axis_label, x_axis="CO2_4percent", x_axis_label="Weighted mean fitness 4% CO2", filename_save="../R_results/wfitnes_plot.pdf"){
+  df_input$diff <- "NO"
+  df_input$diff[(df_input[[x_axis]] - df_input[[y_axis]] > 2.5) | (df_input[[x_axis]] - df_input[[y_axis]] < (-2.5))] <- "YES"
+  # prepare labels for plot
+  df_input$delabel <- NA
+  df_input$delabel[df_input$diff !="NO"] <- df_input$sgRNA_target[df_input$diff != "NO"]
+  mycolors <- c("darkblue",  "#d3d3d3b2")
+  names(mycolors) <- c("YES", "NO")
+  p <- ggplot(data=df_input, aes(x=eval(parse(text=x_axis)), y=eval(parse(text=y_axis)), label=delabel,col=diff)) + geom_point(alpha=0.5, show.legend = FALSE) + 
+    theme_light() + labs(y=y_axis_label, x=x_axis_label) + theme(legend.position = "none") + geom_abline(intercept=0,slope=1,linetype="dashed",color="black") + geom_abline(intercept=-2.5, slope=1, linetype="dashed", color="black") + geom_abline(intercept=2.5, slope=1, linetype="dashed", color="black") + scale_colour_manual(values = mycolors) + geom_text_repel(fontface="italic") #+ xlim(-6, +7) +ylim(-6,+7)
+  ggsave(filename = filename_save, plot=p, width=12, height=12, units="cm")
+return(p)
+}
+
+plot_fitness_fitness(df_red_wide, "CO2_30percent", y_axis_label="Weighted mean fitness 30% CO2", filename_save = "../R_results/wfitness.pdf")
+```
+
+### ncRNAs
+
+These include antisense RNAs, but also other ncRNAs.
+
+```{r fitness-fitness-plots-ncRNAs}
+df_red_wide_ncRNA <- pivot_wider(df_red_ncRNAs,names_from="condition", values_from=c("wmean_fitness"))
+plot_fitness_fitness(df_red_wide_ncRNA, "CO2_30percent", y_axis_label="Weighted mean fitness 30% CO2", filename_save = "../R_results/ncRNA_wfitness.pdf")
+```
+
+## GSEA
+
+```{r GSEA functional definitions}
+kegg_functional_enrichment <- function(DESEq2_dataframe, foldchange=0.8, padjusted=0.05, write=FALSE, path_up="", path_down=""){
+  locus_tags <- row.names(DESEq2_dataframe)
+  
+  down <- DESEq2_dataframe$log2FoldChange < -foldchange & DESEq2_dataframe$padj < padjusted
+  up <- DESEq2_dataframe$log2FoldChange > foldchange & DESEq2_dataframe$padj < padjusted
+  
+  ekeggup <- enrichKEGG(gene         = locus_tags[up],
+                               universe      = locus_tags,
+                               organism     = 'syn',
+                               pAdjustMethod = "BH",
+                               pvalueCutoff  = 0.01,
+                               qvalueCutoff  = 0.05)
+  print(head(ekeggup))
+  
+  if(write){
+    write.csv(ekeggup, path_up)
+  }
+  
+  ekeggdown <- enrichKEGG(gene         = locus_tags[down],
+                                 universe      = locus_tags,
+                                 organism     = 'syn',
+                                 pAdjustMethod = "BH",
+                                 pvalueCutoff  = 0.01,
+                                 qvalueCutoff  = 0.05)
+  print(head(ekeggdown))
+  
+  if(write){
+    write.csv(ekeggdown, path_down)
+  }
+}
+
+# gsea
+kegg_gsea <- function(DESEq2_dataframe, write=FALSE, path=""){
+  locus_tags <- as.vector(DESEq2_dataframe["locus"])
+  geneList <- as.vector(DESEq2_dataframe["wmean_fitness"])
+  names(geneList) <- locus_tags
+  geneList = sort(geneList, decreasing = TRUE)
+  
+  set.seed(42)
+  kegg_gsea_object <- gseKEGG(geneList, organism="syn", minGSSize=10, pvalueCutoff = 0.05, seed=TRUE)
+  tryCatch({
+    print(head(kegg_gsea_object)[,1:10])
+  
+  if(write){
+    write.csv(kegg_gsea_object, path)
+  }
+  return(kegg_gsea_object)}, error=function(e){
+    print("nothing enriched")
+  })
+}
+```
+
+```{r GSEA_analyses}
+df_30percent <- subset(df_reduced_info, df_reduced_info$condition=="CO2_30percent")
+gsea_30percent <- kegg_gsea(df_30percent)
+```
+
+
+# Session info {.unnumbered}
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
