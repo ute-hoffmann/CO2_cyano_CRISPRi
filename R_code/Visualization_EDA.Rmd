@@ -84,7 +84,7 @@ write_tsv(df_red_wide, file="../R_results/Wide_DESeq_result_table.tsv")
 ## Visualization
 
 The weighted mean fitness value combines the values of the different sgRNAs targeting the same gene.
-Fitness-fitness plots were created to identify genes which behave differently when amino acids were added compared to the control cultivation. This was performed separately for ncRNAs and protein-coding genes.
+Fitness-fitness plots were created to identify genes which behave differently at different gas conditions. This was performed separately for ncRNAs and protein-coding genes.
 
 ### Protein-coding genes
 
@@ -124,64 +124,104 @@ plot_fitness_fitness(df_red_wide_ncRNA, "CO2_30percent", y_axis_label="Weighted 
 
 ## GSEA
 
-```{r GSEA functional definitions}
-kegg_functional_enrichment <- function(DESEq2_dataframe, foldchange=0.8, padjusted=0.05, write=FALSE, path_up="", path_down=""){
-  locus_tags <- row.names(DESEq2_dataframe)
-  
-  down <- DESEq2_dataframe$log2FoldChange < -foldchange & DESEq2_dataframe$padj < padjusted
-  up <- DESEq2_dataframe$log2FoldChange > foldchange & DESEq2_dataframe$padj < padjusted
-  
-  ekeggup <- enrichKEGG(gene         = locus_tags[up],
-                               universe      = locus_tags,
-                               organism     = 'syn',
-                               pAdjustMethod = "BH",
-                               pvalueCutoff  = 0.01,
-                               qvalueCutoff  = 0.05)
-  print(head(ekeggup))
-  
-  if(write){
-    write.csv(ekeggup, path_up)
-  }
-  
-  ekeggdown <- enrichKEGG(gene         = locus_tags[down],
-                                 universe      = locus_tags,
-                                 organism     = 'syn',
-                                 pAdjustMethod = "BH",
-                                 pvalueCutoff  = 0.01,
-                                 qvalueCutoff  = 0.05)
-  print(head(ekeggdown))
-  
-  if(write){
-    write.csv(ekeggdown, path_down)
-  }
-}
+Functional enrichment analyses and gene set enrichment analyses help to check if a certain pathway or specific group of genes is especially affected by a treatment. Here, gene set enrichment analyses were performed for either Gene Ontology terms or KEGG pathways. To perform a gene set enrichment analysis, genes are sorted according to some measure, e.g. the log2FC after a certain time or the calculated fitness. Here, we used the weighted fitness of several sgRNAs as measure.
+The mapping of locus tags to Gene Ontology terms was downloaded from UniProt on the 18th Jan. 2024.
+There is the possibility to somehow weigh the adjusted p value in these calculation, e.g. by multiplying the weighted mean with the adjusted p value. 
+Here, only the first few rows of each table is given. Full tables with all found terms/pathways are available.
 
-# gsea
-kegg_gsea <- function(DESEq2_dataframe, write=FALSE, path=""){
-  locus_tags <- as.vector(DESEq2_dataframe["locus"])
-  geneList <- as.vector(DESEq2_dataframe["wmean_fitness"])
-  names(geneList) <- locus_tags
-  geneList = sort(geneList, decreasing = TRUE)
+```{r GSEA-functional-definitions, echo=FALSE}
+### code functional enrichment function
   
-  set.seed(42)
-  kegg_gsea_object <- gseKEGG(geneList, organism="syn", minGSSize=10, pvalueCutoff = 0.05, seed=TRUE)
-  tryCatch({
-    print(head(kegg_gsea_object)[,1:10])
+# read in term_to_gene and term_to_name for enricher()
+term_to_gene <- read.table("../input/2024-01-18_GOterms_slrIdentifier.tsv", sep="\t", header=T)
+term_to_gene <- term_to_gene[,c(2,1)]
+names(term_to_gene) <- c("GO_ID", "locus_tag")
+
+term_to_name <- read.delim("../input/term_to_name.csv", sep="\t", header=T)
   
-  if(write){
-    write.csv(kegg_gsea_object, path)
-  }
-  return(kegg_gsea_object)}, error=function(e){
-    print("nothing enriched")
-  })
-}
+columns_to_show  <- c(2,3,4,5,7,8)
+columns_to_show_KEGG <- c(1,2,3,4,7)
 ```
 
-```{r GSEA_analyses}
-df_30percent <- subset(df_reduced_info, df_reduced_info$condition=="CO2_30percent")
-gsea_30percent <- kegg_gsea(df_30percent)
+In a first step, GSEAs were calculated for the two different CRISPRi libraries separately. The depletion of essential pathways related to "Ribosomes" or "photosynthesis" is a first good quality measure for a CRISPRi screen.
+
+### 4% CO2
+
+```{r GSEAs-4percent}
+DESeq_result_table_4percent <- unique(subset(DESeq_result_table, DESeq_result_table$condition=="CO2_4percent" & DESeq_result_table$time==8)[c("wmean_fitness", "locus")])
+geneList <- DESeq_result_table_4percent$wmean_fitness
+names(geneList) <- DESeq_result_table_4percent$locus
+geneList = sort(geneList, decreasing = TRUE)
+set.seed(513)
+go_gsea_object <- GSEA(geneList, TERM2GENE = term_to_gene, TERM2NAME=term_to_name, seed=TRUE)
+print(head(go_gsea_object)[,columns_to_show])
+write.csv(go_gsea_object, "../R_results/GSEA_output/GO_GSEA_CRISPRi_4percent.csv")
+
+set.seed(914)
+kegg_gsea_object <- gseKEGG(geneList, organism="syn", minGSSize=10, pvalueCutoff = 0.05, seed=TRUE)
+print(head(kegg_gsea_object)[,columns_to_show_KEGG])
+write.csv(kegg_gsea_object, "../R_results/GSEA_output/KEGG_GSEA_CRISPRi_4percent.csv")
+```
+```{r GSEAs}
+DESeq_result_table_30percent <- subset(DESeq_result_table, DESeq_result_table$condition=="CO2_4percent" & DESeq_result_table$time==10)
+geneList <- DESeq_result_table_30percent$fitness
+names(geneList) <- DESeq_result_table_30percent$locus
+geneList = sort(geneList, decreasing = TRUE)
+go_gsea_object <- GSEA(geneList, TERM2GENE = term_to_gene, TERM2NAME=term_to_name, seed=TRUE)
+print(head(go_gsea_object)[,1:10])
 ```
 
+### 30% CO2
+
+```{r GSEAs-30percent}
+DESeq_result_table_30percent <- unique(subset(DESeq_result_table, DESeq_result_table$condition=="CO2_30percent" & DESeq_result_table$time==8)[c("wmean_fitness", "locus")])
+geneList <- DESeq_result_table_30percent$wmean_fitness
+names(geneList) <- DESeq_result_table_30percent$locus
+geneList = sort(geneList, decreasing = TRUE)
+set.seed(513)
+go_gsea_object <- GSEA(geneList, TERM2GENE = term_to_gene, TERM2NAME=term_to_name, seed=TRUE)
+print(head(go_gsea_object)[,columns_to_show])
+write.csv(go_gsea_object, "../R_results/GSEA_output/GO_GSEA_CRISPRi_30percent.csv")
+
+set.seed(914)
+kegg_gsea_object <- gseKEGG(geneList, organism="syn", minGSSize=10, pvalueCutoff = 0.05, seed=TRUE)
+print(head(kegg_gsea_object)[,columns_to_show_KEGG])
+write.csv(kegg_gsea_object, "../R_results/GSEA_output/KEGG_GSEA_CRISPRi_30percent.csv")
+```
+
+### Difference between 4% and 30%
+
+In a next step, we tried to check which GO terms or KEGG pathways show a divergent enrichment or depletion in the two libraries. For this, weighted fitness means belonging to the two conditions were subtracted from each other. These differences were used as input for the GSEA.
+
+```{r GSEAs-difference}
+df_difference <- unique(subset(DESeq_result_table, DESeq_result_table$time==8 & !is.na(DESeq_result_table$locus))[,c("condition", "wmean_fitness", "locus")])
+df_difference_wide <- pivot_wider(df_difference, names_from=condition, values_from=wmean_fitness)
+df_difference_wide$difference <- df_difference_wide$CO2_4percent - df_difference_wide$CO2_30percent
+
+geneList <- df_difference_wide$difference
+names(geneList) <- df_difference_wide$locus
+geneList = sort(geneList, decreasing = TRUE)
+set.seed(513)
+go_gsea_object <- GSEA(geneList, TERM2GENE = term_to_gene, TERM2NAME=term_to_name, seed=TRUE)
+print(head(go_gsea_object)[,columns_to_show])
+write.csv(go_gsea_object, "../R_results/GSEA_output/GO_GSEA_difference.csv")
+
+set.seed(914)
+kegg_gsea_object <- gseKEGG(geneList, organism="syn", minGSSize=10, pvalueCutoff = 0.05, seed=TRUE)
+print(head(kegg_gsea_object)[,columns_to_show_KEGG])
+write.csv(kegg_gsea_object, "../R_results/GSEA_output/KEGG_GSEA_difference.csv")
+```
+
+Results for the comparison of the two libraries were visualized. These plots are separated in three panels. The lowest panel ("Ranked List Metric") shows the metric according to which the genes were sorted. In this case, this was the weighted fitness mean associated with the different genes. The upper panel shows the running enrichment score of terms/pathways which were enriched/depleted in a statistically significant manner. The middle panel shows where the genes associated with these terms are located within the ranked list of genes in the same color code as used in the upper panel.
+
+```{r GSEAs-difference-visualization-etc}
+p <- gseaplot2(go_gsea_object, geneSetID =1:8)
+p
+ggsave("../R_results/GSEA_output/KEGG_GSEA_differences_part1.pdf", plot=p, width=20, height=25, units="cm")
+p <- gseaplot2(kegg_gsea_object, geneSetID =9:15)
+p
+ggsave("../R_results/GSEA_output/KEGG_GSEA_differences_part2.pdf", plot=p, width=20, height=25, units="cm")
+```
 
 # Session info {.unnumbered}
 
