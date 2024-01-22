@@ -198,6 +198,9 @@ df_difference <- unique(subset(DESeq_result_table, DESeq_result_table$time==8 & 
 df_difference_wide <- pivot_wider(df_difference, names_from=condition, values_from=wmean_fitness)
 df_difference_wide$difference <- df_difference_wide$CO2_4percent - df_difference_wide$CO2_30percent
 
+df_difference_wide_annotated <- df_difference_wide %>% left_join(annotation_2)
+write.csv(df_difference_wide_annotated, "../R_results/fitness_values_differneces_annotated.csv")
+
 geneList <- df_difference_wide$difference
 names(geneList) <- df_difference_wide$locus
 geneList = sort(geneList, decreasing = TRUE)

@@ -15,6 +15,13 @@ conda activate env_nf
 nextflow run ../../pipelines/nf-core-crispriscreen/ -profile singularity --input "input/samplesheet_CRISPRi_CO2_Elena.csv" --fasta "input/Synechocystis_v2_trimmed.fasta" --outdir "results" --three_prime_adapter ^CAGTGATAGAGATACTGGGAGCTA...GTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGC --filter_mapq=1 --max_cpus 5 --max_memory 12GB --run_mageck false --gene_fitness true
 ```
 
+## Comparing to data sets from Miao & Jahn et al., 2023
+
+```
+conda activate env_nf
+nextflow run ../../pipelines/nf-core-crispriscreen/ -profile singularity --input "input/samplesheet_CRISPRi_CO2_Elena_including_Miao_Jahn.csv" --fasta "input/Synechocystis_v2_trimmed.fasta" --outdir "results_Miao_Jahn" --three_prime_adapter ^CAGTGATAGAGATACTGGGAGCTA...GTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGC --filter_mapq=1 --max_cpus 5 --max_memory 12GB --run_mageck false --gene_fitness true
+```
+
 # Comments on results
 
 The minimal amount of mapped reads was mapped for sample 4% CO2, generation 0, replicate 1. It was 1,967,391 reads for 21,470 barcodes. This gives a coverage of 91, which is a bit below the advised x100 coverage. 
