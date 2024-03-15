@@ -29,7 +29,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 # Aim of the analysis
 
-Basic visualization of CRISPRi data for cultivation with lysine. Data analysis was performed using nf-core-crispriscreen pipeline (https://github.com/MPUSP/nf-core-crispriscreen).
+Basic visualization of CRISPRi data for cultivation with different levels of CO2 (4% or 30% CO2). Data analysis was performed using nf-core-crispriscreen pipeline (https://github.com/MPUSP/nf-core-crispriscreen).
 
 # Analysis
 
