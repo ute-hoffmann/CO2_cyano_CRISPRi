@@ -38,7 +38,7 @@ In a first step, the results given by the Nextflow pipeline are loaded.
 
 ```{r load-R-data}
 load("../results_controlsgRNAs/fitness/result.Rdata")
-num_sgRNAs <- read_tsv("../input/num_sgRNAs.tsv", col_names = c("sgRNA_target", "num_sgRNAs"))
+num_sgRNAs <- read_tsv("../input/number_sgRNAs_per_target.tsv", col_names = c("sgRNA_target", "num_sgRNAs"))
 DESeq_result_table <- left_join(DESeq_result_table, num_sgRNAs)
 
 count_matrix <- read_tsv("../results_controlsgRNAs/prepare/all_counts.tsv")
@@ -63,6 +63,8 @@ ggsave("../R_results_controlssgRNAs/plot_control_sgRNAs.pdf", plot=plot_controls
 ```
 
 ## Diagnostic plot to check if replicates correlate
+
+This is a diagnostic plot to check if replicates correlate. Samples are clustered according to correlation and the resulting tree is divided into 6 sections according to which samples cluster best. Replicates at different conditions and generations cluster and the 30% samples taken at generations 8 and 10 are most dissimilar to the other samples.
 
 ```{r, fig.width = 12, fig.height = 10, warning = FALSE, message=FALSE}
 df_counts <- tidyr::pivot_longer(count_matrix,
@@ -192,12 +194,12 @@ lineplot_CVinterval_severalColours_meanlog2 <- function(df_to_plot){
   se_vector <- df_to_plot$sd_log2FoldChange/sqrt(df_to_plot$num_sgRNAs)
   se_vector[is.na(se_vector)] <- df_to_plot$lfcSE[is.na(se_vector)]
   df_to_plot$conf <- qnorm(0.975)*se_vector
-  plot_p <- ggplot(df_to_plot, aes(x=time, y=wmean_log2FoldChange, ymin=wmean_log2FoldChange-conf, ymax=wmean_log2FoldChange+conf, group=sgRNA_target, color=factor(sgRNA_target), fill=factor(sgRNA_target))) + new_scale("alpha") + geom_line(linewidth=0.3) + geom_ribbon(linetype=0, alpha=0.1) + theme_light() + xlab("Time (generations)") + ylab("Log2FC")
+  plot_p <- ggplot(df_to_plot, aes(x=time, y=wmean_log2FoldChange, ymin=wmean_log2FoldChange-conf, ymax=wmean_log2FoldChange+conf, group=sgRNA_target, color=factor(sgRNA_target), fill=factor(sgRNA_target))) + geom_line(linewidth=0.5) + geom_ribbon(linetype=0, alpha=0.1) + theme_light() + xlab("Time (generations)") + ylab("Log2FC")
   return(plot_p)
 }
 
 lineplot_severalColours_meanlog2 <- function(df_to_plot){
-  plot_p <- ggplot(df_to_plot, aes(x=time, y=wmean_log2FoldChange, color=factor(sgRNA_target))) + new_scale("alpha") + geom_line(linewidth=0.3) + theme_light() + xlab("Time (generations)") + ylab("Log2FC")
+  plot_p <- ggplot(df_to_plot, aes(x=time, y=wmean_log2FoldChange, color=factor(sgRNA_target))) + geom_line(linewidth=0.3) + theme_light() + xlab("Time (generations)") + ylab("Log2FC")
   return(plot_p)
 }
 
@@ -217,11 +219,21 @@ lineplot_severalColours_log2 <- function(df_to_plot){
 ```
 
 ```{r  message=FALSE}
-smaller_subset <- unique(subset(DESeq_result_table, DESeq_result_table$sgRNA_target %in% c("ssl0564", "cpcG", "pmgA", "apqZ", "ctrl1"))[,c("sd_log2FoldChange", "lfcSE", "time", "wmean_log2FoldChange", "sgRNA_target", "sgRNA", "log2FoldChange", "num_sgRNAs")])
-p <- lineplot_CVinterval_severalColours_meanlog2(smaller_subset)
+smaller_subset <- unique(subset(DESeq_result_table, DESeq_result_table$sgRNA_target %in% c("ssl0564", "cpcG", "pmgA", "apqZ", "ctrl1") & DESeq_result_table$condition=="CO2_4percent")[,c("sd_log2FoldChange", "lfcSE", "time", "wmean_log2FoldChange", "sgRNA_target", "sgRNA", "log2FoldChange", "num_sgRNAs")])
+
+colors_vector <- c("apqZ"="#117733ff", "cpcG"="#cc6677ff", "ssl0564"="#ddcc77ff", "ctrl1"="#88cceeff", "pmgA"="#332288ff") # other compatible colors: c("#aa4499ff","#44aa99ff","#117733ff", "#882255ff")
+p <- lineplot_CVinterval_severalColours_meanlog2(smaller_subset) + ylim(-6,+4.2) + scale_color_manual(values=colors_vector, na.value="grey40") + scale_fill_manual(values=colors_vector, na.value="grey70")
 p
-ggsave("../R_results_controlssgRNAs/growthCurves/variants_timeLinePlot.pdf", plot=p)
-ggsave("../R_results_controlssgRNAs/growthCurves/variants_timeLinePlot.png", plot=p)
+ggsave("../R_results_controlssgRNAs/growthCurves/variants_timeLinePlot_4perc.pdf", plot=p)
+ggsave("../R_results_controlssgRNAs/growthCurves/variants_timeLinePlot_4perc.png", plot=p)
+```
+
+```{r  message=FALSE}
+smaller_subset <- unique(subset(DESeq_result_table, DESeq_result_table$sgRNA_target %in% c("ssl0564", "cpcG", "pmgA", "apqZ", "ctrl1") & DESeq_result_table$condition=="CO2_30percent")[,c("sd_log2FoldChange", "lfcSE", "time", "wmean_log2FoldChange", "sgRNA_target", "sgRNA", "log2FoldChange", "num_sgRNAs")])
+p <- lineplot_CVinterval_severalColours_meanlog2(smaller_subset) + ylim(-6,+4.2) + scale_color_manual(values=colors_vector, na.value="grey40") + scale_fill_manual(values=colors_vector, na.value="grey70")
+p
+ggsave("../R_results_controlssgRNAs/growthCurves/variants_timeLinePlot_30perc.pdf", plot=p)
+ggsave("../R_results_controlssgRNAs/growthCurves/variants_timeLinePlot_30perc.png", plot=p)
 ```
 
 ## GSEA
@@ -264,13 +276,20 @@ kegg_gsea_object <- gseKEGG(geneList, organism="syn", minGSSize=10, pvalueCutoff
 print(head(kegg_gsea_object)[,columns_to_show_KEGG])
 write.csv(kegg_gsea_object, "../R_results_controlssgRNAs/GSEA_output/KEGG_GSEA_CRISPRi_4percent.csv")
 ```
-```{r GSEAs}
-DESeq_result_table_30percent <- subset(DESeq_result_table, DESeq_result_table$condition=="CO2_4percent" & DESeq_result_table$time==10)
-geneList <- DESeq_result_table_30percent$fitness
-names(geneList) <- DESeq_result_table_30percent$locus
-geneList = sort(geneList, decreasing = TRUE)
-go_gsea_object <- GSEA(geneList, TERM2GENE = term_to_gene, TERM2NAME=term_to_name, seed=TRUE)
-print(head(go_gsea_object)[,1:10])
+
+```{r GSEAs-4percent-visualization-etc}
+p <- gseaplot2(go_gsea_object, geneSetID =c(3, 10, 15, 18, 21, 22, 23, 24,25,26))
+p
+ggsave("../R_results_controlssgRNAs/GSEA_output/GO_GSEA_4perc_subset.pdf", plot=p, width=20, height=25, units="cm")
+p <- gseaplot2(kegg_gsea_object, geneSetID =1:8)
+p
+ggsave("../R_results_controlssgRNAs/GSEA_output/KEGG_GSEA_4perc_part1.pdf", plot=p, width=20, height=25, units="cm")
+p <- gseaplot2(kegg_gsea_object, geneSetID =9:17)
+p
+ggsave("../R_results_controlssgRNAs/GSEA_output/KEGG_GSEA_4perc_part2.pdf", plot=p, width=20, height=25, units="cm")
+p <- gseaplot2(kegg_gsea_object, geneSetID =18:25)
+p
+ggsave("../R_results_controlssgRNAs/GSEA_output/KEGG_GSEA_4perc_part3.pdf", plot=p, width=20, height=25, units="cm")
 ```
 
 ### 30% CO2
@@ -291,9 +310,32 @@ print(head(kegg_gsea_object)[,columns_to_show_KEGG])
 write.csv(kegg_gsea_object, "../R_results_controlssgRNAs/GSEA_output/KEGG_GSEA_CRISPRi_30percent.csv")
 ```
 
+```{r GSEAs-30percent-visualization-etc}
+p <- gseaplot2(go_gsea_object, geneSetID =c(3, 6,9,15,16,17,18,19,23,27,28,29,30,32,33))
+p
+ggsave("../R_results_controlssgRNAs/GSEA_output/GO_GSEA_30perc_subset.pdf", plot=p, width=20, height=25, units="cm")
+p <- gseaplot2(kegg_gsea_object, geneSetID =1:9)
+p
+ggsave("../R_results_controlssgRNAs/GSEA_output/KEGG_GSEA_30perc_part1.pdf", plot=p, width=20, height=25, units="cm")
+p <- gseaplot2(kegg_gsea_object, geneSetID =10:18)
+p
+ggsave("../R_results_controlssgRNAs/GSEA_output/KEGG_GSEA_30perc_part2.pdf", plot=p, width=20, height=25, units="cm")
+p <- gseaplot2(kegg_gsea_object, geneSetID =19:27)
+p
+ggsave("../R_results_controlssgRNAs/GSEA_output/KEGG_GSEA_30perc_part3.pdf", plot=p, width=20, height=25, units="cm")
+p <- gseaplot2(kegg_gsea_object, geneSetID =28:36)
+p
+ggsave("../R_results_controlssgRNAs/GSEA_output/KEGG_GSEA_30perc_part4.pdf", plot=p, width=20, height=25, units="cm")
+p <- gseaplot2(kegg_gsea_object, geneSetID =37:45)
+p
+ggsave("../R_results_controlssgRNAs/GSEA_output/KEGG_GSEA_30perc_part5.pdf", plot=p, width=20, height=25, units="cm")
+```
+
 ### Difference between 4% and 30%
 
 In a next step, we tried to check which GO terms or KEGG pathways show a divergent enrichment or depletion in the two libraries. For this, weighted fitness means belonging to the two conditions were subtracted from each other. These differences were used as input for the GSEA.
+
+30% data was subtracted from 4% data. Hence, if a value is high or a pathway enriched, it should have a tendency of being enriched in 4%. The other way round, depletion means a pathway should be more enriched in the 30% data set. These enrichments might not be completely reliable since normalization between both data sets is not perfect.
 
 ```{r GSEAs-difference}
 df_difference <- unique(subset(DESeq_result_table, DESeq_result_table$time==8 & !is.na(DESeq_result_table$locus))[,c("condition", "wmean_fitness", "locus")])
@@ -320,10 +362,13 @@ write.csv(kegg_gsea_object, "../R_results_controlssgRNAs/GSEA_output/KEGG_GSEA_d
 Results for the comparison of the two libraries were visualized. These plots are separated in three panels. The lowest panel ("Ranked List Metric") shows the metric according to which the genes were sorted. In this case, this was the weighted fitness mean associated with the different genes. The upper panel shows the running enrichment score of terms/pathways which were enriched/depleted in a statistically significant manner. The middle panel shows where the genes associated with these terms are located within the ranked list of genes in the same color code as used in the upper panel.
 
 ```{r GSEAs-difference-visualization-etc}
-p <- gseaplot2(go_gsea_object, geneSetID =1:8)
+p <- gseaplot2(go_gsea_object, geneSetID =c(1,3,12,17,18,19))
+p
+ggsave("../R_results_controlssgRNAs/GSEA_output/GO_GSEA_differences_subset.pdf", plot=p, width=20, height=25, units="cm")
+p <- gseaplot2(kegg_gsea_object, geneSetID =1:7)
 p
 ggsave("../R_results_controlssgRNAs/GSEA_output/KEGG_GSEA_differences_part1.pdf", plot=p, width=20, height=25, units="cm")
-p <- gseaplot2(kegg_gsea_object, geneSetID =9:15)
+p <- gseaplot2(kegg_gsea_object, geneSetID =8:14)
 p
 ggsave("../R_results_controlssgRNAs/GSEA_output/KEGG_GSEA_differences_part2.pdf", plot=p, width=20, height=25, units="cm")
 ```
