@@ -15,6 +15,13 @@ conda activate env_nf
 nextflow run ../../pipelines/nf-core-crispriscreen/ -profile singularity --input "input/samplesheet_CRISPRi_CO2_Elena.csv" --fasta "input/Synechocystis_v2_trimmed.fasta" --outdir "results" --three_prime_adapter ^CAGTGATAGAGATACTGGGAGCTA...GTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGC --filter_mapq=1 --max_cpus 5 --max_memory 12GB --run_mageck false --gene_fitness true
 ```
 
+Add parameter to use control sgRNAs as point of comparision and use updated verison of pipeline [e4aad5be10264d99e632761fc8fc56e68d6357c4](https://github.com/MPUSP/nf-core-crispriscreen/commit/e4aad5be10264d99e632761fc8fc56e68d6357c4):
+
+```
+conda activate env_nf
+nextflow run ../../../pipelines/nf-core-crispriscreen/ -profile singularity --input "input/samplesheet_CRISPRi_CO2_Elena.csv" --fasta "input/Synechocystis_v2_trimmed.fasta" --outdir "results_controlsgRNAs" --three_prime_adapter ^CAGTGATAGAGATACTGGGAGCTA...GTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGC --filter_mapq=1 --max_cpus 5 --max_memory 12GB --run_mageck false --gene_controls "ctrl" --gene_fitness true
+```
+
 ## Comparing to data sets from Miao & Jahn et al., 2023
 
 ```

@@ -1,0 +1,170 @@
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1101:25086:16259 1:N:0:AAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1101:25086:16259 1:N:0:AAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1101:76837:25441 1:N:0:GTGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1101:76837:25441 1:N:0:GTGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1101:30596:31083 1:N:0:GAGTTTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1101:30596:31083 1:N:0:GAGTTTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1101:47013:32503 1:N:0:GAGTTTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1101:47013:32503 1:N:0:GAGTTTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1102:57655:6036 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1102:57655:6036 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1102:64529:10826 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1102:64529:10826 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1103:65324:1473 1:N:0:GAGATTCC+AGGTTAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1103:65324:1473 1:N:0:GAGATTCC+AGGTTAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1103:61480:23112 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1103:61480:23112 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1103:39269:36611 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1103:39269:36611 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1104:25540:14707 1:N:0:GAGATTCC+AGGATAGT' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1104:25540:14707 1:N:0:GAGATTCC+AGGATAGT' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1104:27964:23908 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1104:27964:23908 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1104:24764:25971 1:N:0:GAGATTCA+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1104:24764:25971 1:N:0:GAGATTCA+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1104:47430:45831 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1104:47430:45831 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1201:70096:6623 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1201:70096:6623 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1202:57049:9444 1:N:0:GATATTCC+AGGATAGT' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1202:57049:9444 1:N:0:GATATTCC+AGGATAGT' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1202:44874:9765 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1202:44874:9765 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1202:72387:16676 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1202:72387:16676 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1202:52921:23945 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1202:52921:23945 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1203:44078:10220 1:N:0:GAGATGCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1203:44078:10220 1:N:0:GAGATGCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1203:17758:18588 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1203:17758:18588 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1203:32755:41950 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1203:32755:41950 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1204:16338:2780 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1204:16338:2780 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1204:33115:53252 1:N:0:GAGATTCC+AGGAAAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1204:33115:53252 1:N:0:GAGATTCC+AGGAAAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1301:68278:3442 1:N:0:GAGATTCC+AGGATTGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1301:68278:3442 1:N:0:GAGATTCC+AGGATTGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1301:68922:7266 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1301:68922:7266 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1301:33664:40549 1:N:0:GAGATTCG+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1301:33664:40549 1:N:0:GAGATTCG+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1301:30672:51340 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1301:30672:51340 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1301:58791:56281 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1301:58791:56281 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1302:41276:37822 1:N:0:GAGATTCC+AGAATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1302:41276:37822 1:N:0:GAGATTCC+AGAATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1302:72993:45187 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1302:72993:45187 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1303:49172:9709 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1303:49172:9709 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1401:63563:3613 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1401:63563:3613 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1401:33872:16789 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1401:33872:16789 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1401:22889:36516 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1401:22889:36516 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1401:26866:45111 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1401:26866:45111 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1401:47278:53479 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1401:47278:53479 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1401:45328:54710 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1401:45328:54710 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1402:25711:21730 1:N:0:GTGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1402:25711:21730 1:N:0:GTGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1402:30520:44070 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1402:30520:44070 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1402:28229:44695 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1402:28229:44695 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1403:35633:6926 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1403:35633:6926 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1403:27869:10788 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1403:27869:10788 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1403:63298:13609 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1403:63298:13609 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1403:38833:14063 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1403:38833:14063 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1403:37470:16221 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1403:37470:16221 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1403:52618:35380 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1403:52618:35380 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1403:17171:48632 1:N:0:GAGATTCC+AGTATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1403:17171:48632 1:N:0:GAGATTCC+AGTATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1404:30729:20121 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:1404:30729:20121 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2101:35519:21200 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2101:35519:21200 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2101:35273:21749 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2101:35273:21749 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2101:30842:32957 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2101:30842:32957 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2104:38454:4332 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2104:38454:4332 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2201:11869:37728 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2201:11869:37728 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2201:17512:49503 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2201:17512:49503 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2202:9161:20329 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2202:9161:20329 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2202:27680:44183 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2202:27680:44183 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2203:25976:12416 1:N:0:GAGATACC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2203:25976:12416 1:N:0:GAGATACC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2204:37413:8554 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2204:37413:8554 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2301:18364:3366 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2301:18364:3366 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2301:22435:47724 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2301:22435:47724 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2301:39856:53895 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2301:39856:53895 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2302:62048:15388 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2302:62048:15388 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2303:49456:2155 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2303:49456:2155 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2303:49683:3518 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2303:49683:3518 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2303:57485:15937 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2303:57485:15937 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2304:21753:2931 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2304:21753:2931 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2304:42431:23415 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2304:42431:23415 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2304:12304:34718 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2304:12304:34718 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2304:12248:34964 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2304:12248:34964 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2304:12210:35002 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2304:12210:35002 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2304:20996:51094 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2304:20996:51094 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2401:52315:6301 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2401:52315:6301 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2401:19500:49939 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2401:19500:49939 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2402:32414:2193 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2402:32414:2193 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2402:33739:25290 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2402:33739:25290 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2402:74905:28205 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2402:74905:28205 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2402:46635:33411 1:N:0:GAGATTCC+AGGATTGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2402:46635:33411 1:N:0:GAGATTCC+AGGATTGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2402:70058:50696 1:N:0:GAGATTCA+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2402:70058:50696 1:N:0:GAGATTCA+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2403:24234:12870 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2403:24234:12870 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2404:17928:3840 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2404:17928:3840 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2404:66668:35002 1:N:0:GAGATTCC+AGGATAGG' because length (0) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2404:66668:35002 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2404:19803:43994 1:N:0:GAGATTCC+AGGATAGG' because length (1) <= # seed mismatches (0)
+Warning: skipping read 'VH00349:170:AAFCHYTM5:1:2404:19803:43994 1:N:0:GAGATTCC+AGGATAGG' because it was < 2 characters long
+3812861 reads; of these:
+  3812861 (100.00%) were unpaired; of these:
+    749470 (19.66%) aligned 0 times
+    3015468 (79.09%) aligned exactly 1 time
+    47923 (1.26%) aligned >1 times
+80.34% overall alignment rate

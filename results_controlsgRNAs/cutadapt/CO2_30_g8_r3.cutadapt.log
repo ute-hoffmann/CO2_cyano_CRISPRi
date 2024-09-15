@@ -1,0 +1,95 @@
+This is cutadapt 4.6 with Python 3.9.18
+Command line parameters: -Z --cores 5 -a ^CAGTGATAGAGATACTGGGAGCTA...GTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGC -e 0.1 -o CO2_30_g8_r3.trim.fastq.gz CO2_30_g8_r3_trimmed.fq.gz
+Processing single-end reads on 5 cores ...
+Finished in 10.608 s (3.471 µs/read; 17.29 M reads/minute).
+
+=== Summary ===
+
+Total reads processed:               3,056,468
+Reads with adapters:                 3,054,605 (99.9%)
+Reads written (passing filters):     3,056,468 (100.0%)
+
+Total basepairs processed:   239,514,391 bp
+Total written (filtered):     62,531,781 bp (26.1%)
+
+=== Adapter 1 ===
+
+Sequence: CAGTGATAGAGATACTGGGAGCTA...GTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGC; Type: linked; Length: 24+35; 5' trimmed: 3054605 times; 3' trimmed: 2971912 times
+
+Minimum overlap: 24+3
+No. of allowed errors: 2
+
+No. of allowed errors:
+1-9 bp: 0; 10-19 bp: 1; 20-29 bp: 2; 30-35 bp: 3
+
+Overview of removed sequences at 5' end
+length	count	expect	max.err	error counts
+22	1291	0.0	2	0 0 1291
+23	44403	0.0	2	0 41531 2872
+24	3006090	0.0	2	2927782 76798 1510
+25	2793	0.0	2	0 2641 152
+26	28	0.0	2	0 0 28
+
+
+
+Overview of removed sequences at 3' end
+length	count	expect	max.err	error counts
+3	125	47757.3	0	125
+4	170	11939.3	0	170
+5	115	2984.8	0	115
+6	65	746.2	0	65
+7	2	186.6	0	2
+8	2	46.6	0	2
+9	4	11.7	0	3 1
+10	2	2.9	1	0 2
+11	1	0.7	1	0 1
+14	3	0.0	1	3
+15	2	0.0	1	1 1
+16	9	0.0	1	1 8
+17	6	0.0	1	2 4
+18	57	0.0	1	14 43
+19	5	0.0	1	2 3
+20	10	0.0	2	8 1 1
+21	14	0.0	2	10 3 1
+22	14	0.0	2	6 3 5
+23	5	0.0	2	2 2 1
+24	15	0.0	2	4 7 4
+25	27	0.0	2	15 4 8
+26	101	0.0	2	49 24 28
+27	52	0.0	2	8 21 22 1
+28	84	0.0	2	8 32 39 5
+29	976	0.0	2	345 341 252 38
+30	1212	0.0	3	388 316 277 231
+31	2450	0.0	3	305 695 786 664
+32	15193	0.0	3	3038 3529 3409 5217
+33	47439	0.0	3	6608 7739 27979 5113
+34	311772	0.0	3	20771 254259 29058 7684
+35	2577153	0.0	3	2225904 282538 55494 13217
+36	4707	0.0	3	285 3481 737 204
+37	93	0.0	3	29 6 27 31
+38	35	0.0	3	2 6 3 24
+39	20	0.0	3	4 3 5 8
+40	6	0.0	3	2 0 3 1
+41	12	0.0	3	3 4 5
+42	13	0.0	3	3 4 1 5
+43	109	0.0	3	12 24 33 40
+44	166	0.0	3	15 38 56 57
+45	131	0.0	3	12 29 36 54
+46	101	0.0	3	15 17 35 34
+47	130	0.0	3	12 20 34 64
+48	216	0.0	3	11 38 81 86
+49	369	0.0	3	26 82 112 149
+50	139	0.0	3	15 28 37 59
+51	595	0.0	3	55 107 213 220
+52	656	0.0	3	59 139 199 259
+53	1104	0.0	3	164 246 337 357
+54	1449	0.0	3	232 333 414 470
+55	1250	0.0	3	234 262 328 426
+56	1701	0.0	3	245 292 464 700
+57	588	0.0	3	80 120 160 228
+58	788	0.0	3	162 144 210 272
+59	306	0.0	3	114 48 59 85
+60	97	0.0	3	13 21 23 40
+61	35	0.0	3	2 10 9 14
+62	9	0.0	3	0 3 4 2
+63	2	0.0	3	1 0 0 1

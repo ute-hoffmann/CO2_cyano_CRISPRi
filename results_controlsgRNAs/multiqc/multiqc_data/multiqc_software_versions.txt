@@ -1,0 +1,11 @@
+Sample	bowtie2	samtools	pigz	cutadapt	fastqc	r-base	r-tidyverse	bioconductor-deseq2	bioconductor-biocparallel	bioconductor-limma	rmarkdown	subread	trimgalore	nf-core/crispriscreen	Nextflow
+BOWTIE2_ALIGN	2.5.2	1.18	2.6												
+BOWTIE2_BUILD	2.5.2														
+Cutadapt				4.6											
+FITNESS						4.3.3	2.0.0	1.42.0	null	3.58.1					
+FastQC					0.12.1										
+PREPARE_LIBRARY						4.0.3									
+RMARKDOWNNOTEBOOK											2.26				
+SUBREAD_FEATURECOUNTS												2.0.1			
+TRIMGALORE				3.4									0.6.7		
+Workflow														1.0.dev0	24.4.4

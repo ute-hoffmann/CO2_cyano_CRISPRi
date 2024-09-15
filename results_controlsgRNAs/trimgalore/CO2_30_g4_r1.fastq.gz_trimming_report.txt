@@ -1,0 +1,100 @@
+
+SUMMARISING RUN PARAMETERS
+==========================
+Input filename: CO2_30_g4_r1.fastq.gz
+Trimming mode: single-end
+Trim Galore version: 0.6.7
+Cutadapt version: 3.4
+Python version: could not detect
+Number of cores used for trimming: 2
+Quality Phred score cutoff: 20
+Quality encoding type selected: ASCII+33
+Using Illumina adapter for trimming (count: 9405). Second best hit was Nextera (count: 0)
+Adapter sequence: 'AGATCGGAAGAGC' (Illumina TruSeq, Sanger iPCR; auto-detected)
+Maximum trimming error rate: 0.1 (default)
+Minimum required adapter overlap (stringency): 6 bp
+Minimum required sequence length before a sequence gets removed: 20 bp
+Output file will be GZIP compressed
+
+
+This is cutadapt 3.4 with Python 3.9.6
+Command line parameters: -j 2 -e 0.1 -q 20 -O 6 -a AGATCGGAAGAGC CO2_30_g4_r1.fastq.gz
+Processing reads on 2 cores in single-end mode ...
+Finished in 14.47 s (5 µs/read; 11.46 M reads/minute).
+
+=== Summary ===
+
+Total reads processed:               2,763,034
+Reads with adapters:                    71,372 (2.6%)
+Reads written (passing filters):     2,763,034 (100.0%)
+
+Total basepairs processed:   218,602,348 bp
+Quality-trimmed:                 339,364 bp (0.2%)
+Total written (filtered):    216,739,428 bp (99.1%)
+
+=== Adapter 1 ===
+
+Sequence: AGATCGGAAGAGC; Type: regular 3'; Length: 13; Trimmed: 71372 times
+
+No. of allowed errors:
+1-9 bp: 0; 10-13 bp: 1
+
+Bases preceding removed adapters:
+  A: 2.7%
+  C: 97.0%
+  G: 0.3%
+  T: 0.0%
+  none/other: 0.0%
+WARNING:
+    The adapter is preceded by "C" extremely often.
+    The provided adapter sequence could be incomplete at its 5' end.
+
+Overview of removed sequences
+length	count	expect	max.err	error counts
+6	21	674.6	0	21
+7	5	168.6	0	5
+8	88	42.2	0	88
+9	58	10.5	0	57 1
+10	412	2.6	1	195 217
+11	201	0.7	1	45 156
+12	93	0.2	1	12 81
+13	82	0.0	1	15 67
+14	210	0.0	1	31 179
+15	330	0.0	1	53 277
+16	426	0.0	1	54 372
+17	643	0.0	1	63 580
+18	899	0.0	1	236 663
+19	8240	0.0	1	2440 5800
+20	9653	0.0	1	3267 6386
+21	20961	0.0	1	7840 13121
+22	10209	0.0	1	4140 6069
+23	2370	0.0	1	767 1603
+24	11340	0.0	1	4842 6498
+25	3625	0.0	1	1554 2071
+26	1042	0.0	1	425 617
+27	367	0.0	1	156 211
+28	37	0.0	1	11 26
+29	5	0.0	1	1 4
+30	13	0.0	1	4 9
+31	18	0.0	1	11 7
+33	9	0.0	1	4 5
+36	3	0.0	1	2 1
+37	1	0.0	1	0 1
+39	2	0.0	1	0 2
+47	1	0.0	1	1
+51	4	0.0	1	4
+52	1	0.0	1	1
+53	1	0.0	1	1
+65	1	0.0	1	1
+72	1	0.0	1	0 1
+
+
+WARNING:
+    One or more of your adapter sequences may be incomplete.
+    Please see the detailed output above.
+
+RUN STATISTICS FOR INPUT FILE: CO2_30_g4_r1.fastq.gz
+=============================================
+2763034 sequences processed in total
+Sequences removed because they became shorter than the length cutoff of 20 bp:	1 (0.0%)
+

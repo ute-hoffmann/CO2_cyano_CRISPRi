@@ -1,0 +1,183 @@
+<!--
+  ~ Copyright 2013-2024, Seqera Labs
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<html>
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+</head>
+<body>
+<pre class="mermaid" style="text-align: center;">
+flowchart TB
+    subgraph " "
+    v2["channel.fromSamplesheet"]
+    v9["fasta"]
+    v32[" "]
+    v35[" "]
+    v36["save_unaligned"]
+    v37["sort_bam"]
+    v56["samplesheet"]
+    v57["gene_sep"]
+    v58["input_design"]
+    v64["samplesheet"]
+    v65["normalization"]
+    v66["gene_fitness"]
+    v67["gene_sep"]
+    v71["Channel.of"]
+    v74["parameters"]
+    v88["Channel.of"]
+    v91["Channel.fromPath"]
+    v94["ch_workflow_summary"]
+    v98["ch_methods_description"]
+    v113["Channel.of"]
+    end
+    subgraph NFCORE_CRISPRISCREEN
+    subgraph CRISPRISCREEN
+    v10([PREPARE_LIBRARY])
+    v17([TRIMGALORE])
+    v23([CUTADAPT])
+    v26([FASTQC])
+    v33([BOWTIE2_BUILD])
+    v38([BOWTIE2_ALIGN])
+    v49([SUBREAD_FEATURECOUNTS])
+    v59([PREPARE_COUNTS])
+    v68([FITNESS])
+    v75([RMARKDOWNNOTEBOOK])
+    v119([MULTIQC])
+    v3(( ))
+    v12(( ))
+    v48(( ))
+    v54(( ))
+    v62(( ))
+    v72(( ))
+    v116(( ))
+    v117(( ))
+    v118(( ))
+    v123(( ))
+    end
+    end
+    subgraph " "
+    v11[" "]
+    v18[" "]
+    v19[" "]
+    v24[" "]
+    v27[" "]
+    v39[" "]
+    v40[" "]
+    v41[" "]
+    v42[" "]
+    v43[" "]
+    v44[" "]
+    v60[" "]
+    v61[" "]
+    v63["ch_all_counts"]
+    v69[" "]
+    v76[" "]
+    v77[" "]
+    v78[" "]
+    v79[" "]
+    v80[" "]
+    v81[" "]
+    v82[" "]
+    v83[" "]
+    v114["ch_multiqc_conflogo"]
+    v120[" "]
+    v121[" "]
+    v122[" "]
+    v124["multiqc_report"]
+    end
+    v2 --> v3
+    v9 --> v10
+    v10 --> v11
+    v10 --> v12
+    v10 --> v48
+    v3 --> v17
+    v17 --> v23
+    v17 --> v19
+    v17 --> v18
+    v17 --> v12
+    v23 --> v26
+    v23 --> v24
+    v23 --> v38
+    v23 --> v12
+    v26 --> v27
+    v26 --> v12
+    v32 --> v33
+    v33 --> v38
+    v33 --> v12
+    v35 --> v38
+    v36 --> v38
+    v37 --> v38
+    v38 --> v44
+    v38 --> v43
+    v38 --> v42
+    v38 --> v41
+    v38 --> v40
+    v38 --> v39
+    v38 --> v12
+    v38 --> v48
+    v48 --> v49
+    v49 --> v12
+    v49 --> v54
+    v56 --> v59
+    v57 --> v59
+    v58 --> v59
+    v54 --> v59
+    v59 --> v61
+    v59 --> v60
+    v59 --> v68
+    v59 --> v62
+    v59 --> v72
+    v62 --> v63
+    v64 --> v68
+    v65 --> v68
+    v66 --> v68
+    v67 --> v68
+    v68 --> v69
+    v68 --> v12
+    v68 --> v72
+    v71 --> v75
+    v74 --> v75
+    v72 --> v75
+    v75 --> v83
+    v75 --> v82
+    v75 --> v81
+    v75 --> v80
+    v75 --> v79
+    v75 --> v78
+    v75 --> v77
+    v75 --> v76
+    v75 --> v12
+    v88 --> v12
+    v91 --> v116
+    v94 --> v12
+    v98 --> v12
+    v113 --> v114
+    v12 --> v119
+    v116 --> v119
+    v117 --> v119
+    v118 --> v119
+    v119 --> v122
+    v119 --> v121
+    v119 --> v120
+    v119 --> v123
+    v123 --> v124
+
+</pre>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true });
+</script>
+</body>
+</html>

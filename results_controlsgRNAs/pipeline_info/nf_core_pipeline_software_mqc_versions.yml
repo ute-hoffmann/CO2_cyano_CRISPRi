@@ -1,0 +1,28 @@
+BOWTIE2_ALIGN:
+  bowtie2: 2.5.2
+  samtools: 1.18
+  pigz: 2.6
+BOWTIE2_BUILD:
+  bowtie2: 2.5.2
+CUTADAPT:
+  cutadapt: 4.6
+FASTQC:
+  fastqc: 0.12.1
+FITNESS:
+  r-base: 4.3.3
+  r-tidyverse: 2.0.0
+  bioconductor-deseq2: 1.42.0
+  bioconductor-biocparallel: null
+  bioconductor-limma: 3.58.1
+PREPARE_LIBRARY:
+  r-base: 4.0.3
+RMARKDOWNNOTEBOOK:
+  rmarkdown: 2.26
+SUBREAD_FEATURECOUNTS:
+  subread: 2.0.1
+TRIMGALORE:
+  trimgalore: 0.6.7
+  cutadapt: 3.4
+Workflow:
+    nf-core/crispriscreen: v1.0dev
+    Nextflow: 24.04.4
