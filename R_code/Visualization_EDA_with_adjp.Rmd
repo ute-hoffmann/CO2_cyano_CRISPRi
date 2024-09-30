@@ -137,12 +137,13 @@ DESeq_result_table <- DESeq_result_table %>% left_join(annotation_2)
 
 ```{r save-annotated-files}
 write_tsv(DESeq_result_table, file="../R_results_controlssgRNAs/annotated_DESeq_result_table.tsv")
-df_reduced_info <- unique(subset(DESeq_result_table, DESeq_result_table$time==8 | DESeq_result_table$time==14)[,c(2,25,26,27,4,20,21,23,24)])
+df_reduced_info <- unique(subset(DESeq_result_table, DESeq_result_table$time==8 | DESeq_result_table$time==14)[,c(2,25,26,27,4,20,21,23,24,28)])
 write_tsv(df_reduced_info, file="../R_results_controlssgRNAs/Reduced_annotated_DESeq_result_table.tsv")
 ```
 
 ```{r wider-table}
 df_red_wide <- pivot_wider(df_reduced_info, names_from=condition, values_from=c(wmean_fitness, sd_fitness, p_fitness_adj, comb_score))
+df_red_wide$impact_score <- (df_red_wide$wmean_fitness_CO2_30percent - df_red_wide$wmean_fitness_CO2_4percent)/sqrt(2)
 write_tsv(df_red_wide, file="../R_results_controlssgRNAs/Wide_DESeq_result_table.tsv")
 ```
 
