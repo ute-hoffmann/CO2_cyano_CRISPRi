@@ -93,6 +93,10 @@ readr::write_tsv(DESeq_result_table, file = "../R_results_controlssgRNAs/result.
 ```
 
 
+```{r include=FALSE}
+load("../R_results_controlssgRNAs/result.Rdata")
+```
+
 # Add annotation to results tables
 
 In the following, annotation is added to the results table provided by the Nextflow pipeline. Mapping of the sgRNA targets to slr-locus tags is given in this file, downloaded on 24/02/23: https://github.com/m-jahn/R-notebook-crispri-lib/blob/master/sgRNA_library_V2/data/input/mapping_trivial_names.tsv
@@ -114,12 +118,12 @@ DESeq_result_table <- DESeq_result_table %>% left_join(annotation_2)
 
 ```{r save-annotated-files}
 write_tsv(DESeq_result_table, file="../R_results_controlssgRNAs/annotated_DESeq_result_table_comparisonsConditions.tsv")
-df_reduced_info <- unique(subset(DESeq_result_table, DESeq_result_table$time==8 | DESeq_result_table$time==14)[,c(2,25,26,27,4,20,21,23,24,28)])
+df_reduced_info <- unique(subset(DESeq_result_table, DESeq_result_table$time==8 | DESeq_result_table$time==14)[,c(2,30,31,32,4,20,21,23,24,26,27,28,29)])
 write_tsv(df_reduced_info, file="../R_results_controlssgRNAs/Reduced_annotated_DESeq_result_table_comparisonsConditions.tsv")
 ```
 
 ```{r wider-table}
-df_red_wide <- pivot_wider(df_reduced_info, names_from=condition, values_from=c(wmean_fitness, sd_fitness, p_fitness_adj, comb_score))
+df_red_wide <- pivot_wider(df_reduced_info, names_from=condition, values_from=c(wmean_fitness, sd_fitness, p_fitness_adj, comb_score, p_fitness_condition, p_fitness_condition_adj, p_fitness_condition_2, p_fitness_condition_2_adj))
 df_red_wide$impact_score <- (df_red_wide$wmean_fitness_CO2_30percent - df_red_wide$wmean_fitness_CO2_4percent)/sqrt(2)
 write_tsv(df_red_wide, file="../R_results_controlssgRNAs/Wide_DESeq_result_table_comparisonsConditions.tsv")
 ```
@@ -129,3 +133,4 @@ write_tsv(df_red_wide, file="../R_results_controlssgRNAs/Wide_DESeq_result_table
 ```{r sessionInfo, echo=FALSE}
 sessionInfo()
 ```
+
