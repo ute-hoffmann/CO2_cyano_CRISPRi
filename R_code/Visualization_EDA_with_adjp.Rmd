@@ -62,6 +62,22 @@ print(plot_controls_sgRNAs)
 ggsave("../R_results_controlssgRNAs/plot_control_sgRNAs.pdf", plot=plot_controls_sgRNAs, width=12, height=12, units="cm")
 ```
 
+## Diagnostic plot of fitness value distributions
+
+```{r}
+subs <- unique(DESeq_result_table[,c("sgRNA", "condition", "wmean_fitness")])
+p <- ggplot(subs, aes(x=wmean_fitness, group=condition, fill=condition)) + geom_density(adjust=1.5, alpha=.4) + theme_light() + scale_fill_manual(values=c("CO2_4percent"="#005a96ff", "CO2_30percent"="#c57ba5ff"))
+p
+ggsave("../R_results_controlssgRNAs/wmean_fitness_sgRNA-level_densityplot.pdf", plot=p, width=11.5, height=8)
+ggsave("../R_results_controlssgRNAs/wmean_fitness_sgRNA-level_densityplot.png", plot=p, width=11.5, height=8)
+
+subs <- unique(DESeq_result_table[,c("sgRNA_target", "condition", "wmean_fitness")])
+p <- ggplot(subs, aes(x=wmean_fitness, group=condition, fill=condition)) + geom_density(adjust=1.5, alpha=.4) + theme_light() + scale_fill_manual(values=c("CO2_4percent"="#005a96ff", "CO2_30percent"="#c57ba5ff"))
+p
+ggsave("../R_results_controlssgRNAs/wmean_fitness_sgRNAtarget-level_densityplot.pdf", plot=p, width=11.5, height=8)
+ggsave("../R_results_controlssgRNAs/wmean_fitness_sgRNAtarget-level_densityplot.png", plot=p, width=11.5, height=8)
+```
+
 ## Diagnostic plot to check if replicates correlate
 
 This is a diagnostic plot to check if replicates correlate. Samples are clustered according to correlation and the resulting tree is divided into 6 sections according to which samples cluster best. Replicates at different conditions and generations cluster and the 30% samples taken at generations 8 and 10 are most dissimilar to the other samples.

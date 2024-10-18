@@ -1,0 +1,131 @@
+---
+title: "Analyze CRISPRi growth competition data for growth at high CO2 gas feeds, calculate adjusted p values between two conditions"
+author: "Ute Hoffmann (Science For Life Laboratory (KTH), Stockholm, Sweden)"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+    number_sections: true
+  html_document:
+    fig_width: 15
+    fig_height: 8
+    theme: united
+    toc: false
+    number_sections: true
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+require("knitr")
+library(ggplot2)
+library(ggrepel)
+library(ggpubr)
+library(tidyverse)
+library(magrittr)
+library(clusterProfiler)
+library(enrichplot)
+library(pheatmap)
+
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+# Aim of the analysis
+
+Calculation of Wilcoxon rank sum test between sgRNA fitness values between 4% CO2 data and 30% CO2 data.
+
+# Analysis
+
+In a first step, the results given by the Nextflow pipeline are loaded.
+
+```{r load-R-data}
+load("../results_controlsgRNAs/fitness/result.Rdata")
+num_sgRNAs <- read_tsv("../input/number_sgRNAs_per_target.tsv", col_names = c("sgRNA_target", "num_sgRNAs"))
+DESeq_result_table <- left_join(DESeq_result_table, num_sgRNAs)
+
+count_matrix <- read_tsv("../results_controlsgRNAs/prepare/all_counts.tsv")
+count_matrix$Gene <- NULL
+
+df_samplesheet <- readr::read_csv("../input/samplesheet_CRISPRi_CO2_Elena.csv", col_types = cols()) %>%
+    select(all_of(c("sample", "condition", "replicate", "time", "group", "reference_group"))) %>%
+    dplyr::mutate(group = factor(`group`))
+df_samplesheet$name <- paste("gen_", df_samplesheet$time, "_r_", df_samplesheet$replicate, sep="")
+```
+
+```{r wilcox_test}
+get_controls <- function(condition, sgRNA_target){
+  sgRNA_spec = sgRNA_target
+  cond_spec = condition
+  filter(DESeq_result_table, condition != cond_spec & sgRNA_target == sgRNA_spec)$fitness
+}
+
+DESeq_result_table <- dplyr::left_join(
+  DESeq_result_table,
+  DESeq_result_table %>%
+    dplyr::group_by(sgRNA_target, condition, time) %>%
+    dplyr::summarize(
+      .groups = "keep",
+      # apply Wilcoxon rank sum test against other condition
+      p_fitness_condition = stats::wilcox.test(
+        x = fitness,
+        y = get_controls(condition, sgRNA_target),
+        alternative = "two.sided"
+        )$p.value,
+      # apply Wilcoxon rank sum test against other condition
+      p_fitness_condition_2 = stats::wilcox.test(
+        x = unique(fitness),
+        y = unique(get_controls(condition, sgRNA_target)),
+        alternative = "two.sided"
+        )$p.value
+      ),
+  by = c("sgRNA_target", "condition", "time")
+  ) %>%
+  group_by(condition, time) %>%
+  mutate(
+    p_fitness_condition_adj = stats::p.adjust(p_fitness_condition, method = "BH"),
+    p_fitness_condition_2_adj = stats::p.adjust(p_fitness_condition_2, method = "BH"),
+    comb_score = abs(wmean_fitness) * -log10(p_fitness_adj)
+    )
+```
+
+
+```{r save}
+save(DESeq_result_table, file = "../R_results_controlssgRNAs/result.Rdata")
+readr::write_tsv(DESeq_result_table, file = "../R_results_controlssgRNAs/result.tsv")
+```
+
+
+# Add annotation to results tables
+
+In the following, annotation is added to the results table provided by the Nextflow pipeline. Mapping of the sgRNA targets to slr-locus tags is given in this file, downloaded on 24/02/23: https://github.com/m-jahn/R-notebook-crispri-lib/blob/master/sgRNA_library_V2/data/input/mapping_trivial_names.tsv
+The appended annotation is based on Uniprot and Cyanobase, partially edited manually. The table used for annotation was created beginning of 2021. Therefore, it does not include several genes which were only recently characterized.
+For a detailed description of all the columns given in the results tables, consult https://mpusp.github.io/nf-core-crispriscreen/output or https://www.biorxiv.org/content/10.1101/2023.02.13.528328v1.full.pdf+htmls
+
+```{r mapping-locusTags}
+mapping_gene_locus <- read_tsv("../input/2023-02-24_mapping_trivial_names.tsv", show_col_types=FALSE)
+names(mapping_gene_locus) <- c("sgRNA_target", "locus")
+DESeq_result_table <- DESeq_result_table %>% left_join(mapping_gene_locus)
+```
+
+```{r add-annotation}
+annotation <- read_tsv("../input/annotation_locusTags_stand13012021.csv", show_col_types = FALSE)
+annotation_2 <- annotation[,c(1,2,3)]
+names(annotation_2) <- c("locus", "Gene name","Product")
+DESeq_result_table <- DESeq_result_table %>% left_join(annotation_2)
+```
+
+```{r save-annotated-files}
+write_tsv(DESeq_result_table, file="../R_results_controlssgRNAs/annotated_DESeq_result_table_comparisonsConditions.tsv")
+df_reduced_info <- unique(subset(DESeq_result_table, DESeq_result_table$time==8 | DESeq_result_table$time==14)[,c(2,25,26,27,4,20,21,23,24,28)])
+write_tsv(df_reduced_info, file="../R_results_controlssgRNAs/Reduced_annotated_DESeq_result_table_comparisonsConditions.tsv")
+```
+
+```{r wider-table}
+df_red_wide <- pivot_wider(df_reduced_info, names_from=condition, values_from=c(wmean_fitness, sd_fitness, p_fitness_adj, comb_score))
+df_red_wide$impact_score <- (df_red_wide$wmean_fitness_CO2_30percent - df_red_wide$wmean_fitness_CO2_4percent)/sqrt(2)
+write_tsv(df_red_wide, file="../R_results_controlssgRNAs/Wide_DESeq_result_table_comparisonsConditions.tsv")
+```
+
+# Session info {.unnumbered}
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
