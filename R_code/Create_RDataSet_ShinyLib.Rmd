@@ -1,0 +1,70 @@
+---
+title: "Create data set compatible with ShinyLib"
+author: "Ute Hoffmann (Science For Life Laboratory (KTH), Stockholm, Sweden)"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+    number_sections: true
+  html_document:
+    fig_width: 15
+    fig_height: 8
+    theme: united
+    toc: false
+    number_sections: true
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+require("knitr")
+library(tidyverse)
+library(magrittr)
+library(stringr)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+In a first step, the results given by the Nextflow pipeline are loaded.
+
+```{r load-R-data}
+load("../results_controlsgRNAs/fitness/result.Rdata")
+load("../input/CRISPR_2022_dataSet_forShinyLib/CRISPRi_library_2022.Rdata")
+
+annotation <- unique(CRISPRi_library_2022[,c(1,26:33)])
+DESeq_result_table <- DESeq_result_table %>% left_join(annotation)
+DESeq_result_table$FoldChange <- 2^DESeq_result_table$log2FoldChange
+CRISPRi_library_2024_CO2data <- DESeq_result_table
+```
+
+```{r fix-gene-names}
+CRISPRi_library_2024_CO2data[grepl("nc_", CRISPRi_library_2024_CO2data$sgRNA),]$sgRNA_type <- "non-coding"
+CRISPRi_library_2024_CO2data[grepl("nc_", CRISPRi_library_2024_CO2data$sgRNA),]$protein <- "non-coding RNA"
+CRISPRi_library_2024_CO2data[grepl("nc_", CRISPRi_library_2024_CO2data$sgRNA),]$process <- "non-coding RNA"
+CRISPRi_library_2024_CO2data[grepl("nc_", CRISPRi_library_2024_CO2data$sgRNA),]$pathway <- "unknown"
+
+df_ncRNAs <- as.data.frame(str_split_fixed(CRISPRi_library_2024_CO2data[grepl("nc_", CRISPRi_library_2024_CO2data$sgRNA_target),]$sgRNA_target, "_", 2))
+df_ncRNAs$sgRNA_target <- CRISPRi_library_2024_CO2data[grepl("nc_", CRISPRi_library_2024_CO2data$sgRNA),]$sgRNA_target
+df_ncRNAs <- unique(df_ncRNAs[,c(2,3)])
+names(df_ncRNAs) <- c("locus", "sgRNA_target")
+CRISPRi_library_2024_CO2data <- rows_patch(CRISPRi_library_2024_CO2data, df_ncRNAs, by="sgRNA_target")
+ncRNA_annotation <- read_tsv("../input/ncRNAs_CRISPRi.csv")
+CRISPRi_library_2024_CO2data <- rows_patch(CRISPRi_library_2024_CO2data, ncRNA_annotation, by="locus", unmatched="ignore")
+names(df_ncRNAs) <- c("gene_name", "sgRNA_target")
+df_ncRNAs <- tibble(df_ncRNAs)
+CRISPRi_library_2024_CO2data <- rows_patch(CRISPRi_library_2024_CO2data, df_ncRNAs, by="sgRNA_target")
+
+CRISPRi_library_2024_CO2data[is.na(CRISPRi_library_2024_CO2data$gene_name_short),]$gene_name_short <- CRISPRi_library_2024_CO2data[is.na(CRISPRi_library_2024_CO2data$gene_name_short),]$gene_name
+
+list_with_locus_tags <- (grepl("sll", CRISPRi_library_2024_CO2data$gene_name) | grepl("slr", CRISPRi_library_2024_CO2data$gene_name) | grepl("sml", CRISPRi_library_2024_CO2data$gene_name) | grepl("smr", CRISPRi_library_2024_CO2data$gene_name) | grepl("ssr", CRISPRi_library_2024_CO2data$gene_name) | grepl("ssl", CRISPRi_library_2024_CO2data$gene_name) | grepl("nc_", CRISPRi_library_2024_CO2data$sgRNA_target))
+CRISPRi_library_2024_CO2data[!list_with_locus_tags, ]$gene_name <- paste(CRISPRi_library_2024_CO2data[!list_with_locus_tags, ]$gene_name_short, CRISPRi_library_2024_CO2data[!list_with_locus_tags, ]$locus, sep=" ")
+ncRNAs <- subset(CRISPRi_library_2024_CO2data, CRISPRi_library_2024_CO2data$sgRNA_type=="non-coding")
+```
+
+```{r save}
+save(CRISPRi_library_2024_CO2data, file = "../R_results_controlssgRNAs/CRISPRi_library_2024_CO2data.Rdata")
+```
+
+# Session info {.unnumbered}
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
+

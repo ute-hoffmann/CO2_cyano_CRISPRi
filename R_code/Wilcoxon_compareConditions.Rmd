@@ -16,14 +16,8 @@ output:
 
 ```{r setup, include=FALSE, echo=FALSE}
 require("knitr")
-library(ggplot2)
-library(ggrepel)
-library(ggpubr)
 library(tidyverse)
 library(magrittr)
-library(clusterProfiler)
-library(enrichplot)
-library(pheatmap)
 
 knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
 ```
@@ -40,21 +34,13 @@ In a first step, the results given by the Nextflow pipeline are loaded.
 load("../results_controlsgRNAs/fitness/result.Rdata")
 num_sgRNAs <- read_tsv("../input/number_sgRNAs_per_target.tsv", col_names = c("sgRNA_target", "num_sgRNAs"))
 DESeq_result_table <- left_join(DESeq_result_table, num_sgRNAs)
-
-count_matrix <- read_tsv("../results_controlsgRNAs/prepare/all_counts.tsv")
-count_matrix$Gene <- NULL
-
-df_samplesheet <- readr::read_csv("../input/samplesheet_CRISPRi_CO2_Elena.csv", col_types = cols()) %>%
-    select(all_of(c("sample", "condition", "replicate", "time", "group", "reference_group"))) %>%
-    dplyr::mutate(group = factor(`group`))
-df_samplesheet$name <- paste("gen_", df_samplesheet$time, "_r_", df_samplesheet$replicate, sep="")
 ```
-
 ```{r wilcox_test}
 get_controls <- function(condition, sgRNA_target){
   sgRNA_spec = sgRNA_target
   cond_spec = condition
-  filter(DESeq_result_table, condition != cond_spec & sgRNA_target == sgRNA_spec)$fitness
+  control_table <- DESeq_result_table[DESeq_result_table$condition != cond_spec & DESeq_result_table$sgRNA_target == sgRNA_spec & DESeq_result_table$time == 10,]
+  control_table$fitness
 }
 
 DESeq_result_table <- dplyr::left_join(
@@ -68,21 +54,18 @@ DESeq_result_table <- dplyr::left_join(
         x = fitness,
         y = get_controls(condition, sgRNA_target),
         alternative = "two.sided"
-        )$p.value,
-      # apply Wilcoxon rank sum test against other condition
-      p_fitness_condition_2 = stats::wilcox.test(
-        x = unique(fitness),
-        y = unique(get_controls(condition, sgRNA_target)),
-        alternative = "two.sided"
         )$p.value
       ),
   by = c("sgRNA_target", "condition", "time")
-  ) %>%
+  ) 
+
+```
+
+```{r p_adj}
+DESeq_result_table <- DESeq_result_table %>%
   group_by(condition, time) %>%
   mutate(
-    p_fitness_condition_adj = stats::p.adjust(p_fitness_condition, method = "BH"),
-    p_fitness_condition_2_adj = stats::p.adjust(p_fitness_condition_2, method = "BH"),
-    comb_score = abs(wmean_fitness) * -log10(p_fitness_adj)
+    p_fitness_condition_adj = stats::p.adjust(p_fitness_condition, method = "BH")
     )
 ```
 
@@ -118,12 +101,12 @@ DESeq_result_table <- DESeq_result_table %>% left_join(annotation_2)
 
 ```{r save-annotated-files}
 write_tsv(DESeq_result_table, file="../R_results_controlssgRNAs/annotated_DESeq_result_table_comparisonsConditions.tsv")
-df_reduced_info <- unique(subset(DESeq_result_table, DESeq_result_table$time==8 | DESeq_result_table$time==14)[,c(2,30,31,32,4,20,21,23,24,26,27,28,29)])
+df_reduced_info <- unique(subset(DESeq_result_table, DESeq_result_table$time==8 | DESeq_result_table$time==14)[,c(2,28,29,30,4,20,21,23,24,26,27)])
 write_tsv(df_reduced_info, file="../R_results_controlssgRNAs/Reduced_annotated_DESeq_result_table_comparisonsConditions.tsv")
 ```
 
 ```{r wider-table}
-df_red_wide <- pivot_wider(df_reduced_info, names_from=condition, values_from=c(wmean_fitness, sd_fitness, p_fitness_adj, comb_score, p_fitness_condition, p_fitness_condition_adj, p_fitness_condition_2, p_fitness_condition_2_adj))
+df_red_wide <- pivot_wider(df_reduced_info, names_from=condition, values_from=c(wmean_fitness, sd_fitness, p_fitness_adj, comb_score, p_fitness_condition, p_fitness_condition_adj))
 df_red_wide$impact_score <- (df_red_wide$wmean_fitness_CO2_30percent - df_red_wide$wmean_fitness_CO2_4percent)/sqrt(2)
 write_tsv(df_red_wide, file="../R_results_controlssgRNAs/Wide_DESeq_result_table_comparisonsConditions.tsv")
 ```

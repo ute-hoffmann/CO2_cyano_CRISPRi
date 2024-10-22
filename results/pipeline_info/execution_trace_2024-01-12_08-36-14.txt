@@ -1,3 +1,0 @@
-task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
-3	9d/26f309	302278	NFCORE_CRISPRISCREEN:CRISPRISCREEN:INPUT_CHECK:SAMPLESHEET_CHECK (samplesheet_CRISPRi_CO2_Elena.csv)	FAILED	1	2024-01-12 08:36:23.575	1.9s	1.9s	-	-	-	-	-
-2	e6/89cbdc	302443	NFCORE_CRISPRISCREEN:CRISPRISCREEN:BOWTIE2_BUILD (Synechocystis_v2_trimmed.fasta)	COMPLETED	0	2024-01-12 08:36:25.534	2.9s	2s	231.7%	117.2 MB	719.1 MB	8.6 MB	13.1 MB
