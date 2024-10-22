@@ -1,5 +1,5 @@
 header = True
-with open("Wide_DESeq_result_table.tsv") as f:
+with open("Wide_DESeq_result_table_comparisonsConditions.tsv") as f:
 	for line in f:
 		if header:
 			with open("ncRNAs_results.tsv", "w") as nc_f:

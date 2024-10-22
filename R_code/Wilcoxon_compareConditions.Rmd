@@ -108,6 +108,7 @@ write_tsv(df_reduced_info, file="../R_results_controlssgRNAs/Reduced_annotated_D
 ```{r wider-table}
 df_red_wide <- pivot_wider(df_reduced_info, names_from=condition, values_from=c(wmean_fitness, sd_fitness, p_fitness_adj, comb_score, p_fitness_condition, p_fitness_condition_adj))
 df_red_wide$impact_score <- (df_red_wide$wmean_fitness_CO2_30percent - df_red_wide$wmean_fitness_CO2_4percent)/sqrt(2)
+df_red_wide$combined_impact_score <- abs(df_red_wide$impact_score) * -log10(df_red_wide$p_fitness_condition_adj_CO2_30percent)
 write_tsv(df_red_wide, file="../R_results_controlssgRNAs/Wide_DESeq_result_table_comparisonsConditions.tsv")
 ```
 
