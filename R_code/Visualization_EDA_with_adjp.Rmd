@@ -66,16 +66,16 @@ ggsave("../R_results_controlssgRNAs/plot_control_sgRNAs.pdf", plot=plot_controls
 
 ```{r}
 subs <- unique(DESeq_result_table[,c("sgRNA", "condition", "wmean_fitness")])
-p <- ggplot(subs, aes(x=wmean_fitness, group=condition, fill=condition)) + geom_density(adjust=1.5, alpha=.4) + theme_light() + scale_fill_manual(values=c("CO2_4percent"="#005a96ff", "CO2_30percent"="#c57ba5ff"))
+p <- ggplot(subs, aes(x=wmean_fitness, group=condition, fill=condition)) + geom_density(adjust=1.5, alpha=.4) + theme_light() + scale_fill_manual(values=c("CO2_4percent"="#00b050ff", "CO2_30percent"="#ff9966"))
 p
-ggsave("../R_results_controlssgRNAs/wmean_fitness_sgRNA-level_densityplot.pdf", plot=p, width=11.5, height=8)
-ggsave("../R_results_controlssgRNAs/wmean_fitness_sgRNA-level_densityplot.png", plot=p, width=11.5, height=8)
+ggsave("../R_results_controlssgRNAs/wmean_fitness_sgRNA-level_densityplot.pdf", plot=p, width=162, height=60, units ="mm")
+ggsave("../R_results_controlssgRNAs/wmean_fitness_sgRNA-level_densityplot.png", plot=p, width=162, height=60, units ="mm")
 
 subs <- unique(DESeq_result_table[,c("sgRNA_target", "condition", "wmean_fitness")])
-p <- ggplot(subs, aes(x=wmean_fitness, group=condition, fill=condition)) + geom_density(adjust=1.5, alpha=.4) + theme_light() + scale_fill_manual(values=c("CO2_4percent"="#005a96ff", "CO2_30percent"="#c57ba5ff"))
+p <- ggplot(subs, aes(x=wmean_fitness, group=condition, fill=condition)) + geom_density(adjust=1.5, alpha=.4) + theme_light() + scale_fill_manual(values=c("CO2_4percent"="#00b050ff", "CO2_30percent"="#ff9966"))
 p
-ggsave("../R_results_controlssgRNAs/wmean_fitness_sgRNAtarget-level_densityplot.pdf", plot=p, width=11.5, height=8)
-ggsave("../R_results_controlssgRNAs/wmean_fitness_sgRNAtarget-level_densityplot.png", plot=p, width=11.5, height=8)
+ggsave("../R_results_controlssgRNAs/wmean_fitness_sgRNAtarget-level_densityplot.pdf", plot=p, width=162, height=60, units ="mm")
+ggsave("../R_results_controlssgRNAs/wmean_fitness_sgRNAtarget-level_densityplot.png", plot=p, width=162, height=60, units ="mm")
 ```
 
 ## Diagnostic plot to check if replicates correlate

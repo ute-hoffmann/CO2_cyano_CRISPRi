@@ -36,9 +36,7 @@ num_sgRNAs <- read_tsv("../input/number_sgRNAs_per_target.tsv", col_names = c("s
 DESeq_result_table <- left_join(DESeq_result_table, num_sgRNAs)
 ```
 ```{r wilcox_test}
-get_controls <- function(condition, sgRNA_target){
-  sgRNA_spec = sgRNA_target
-  cond_spec = condition
+get_controls <- function(cond_spec, sgRNA_spec){
   control_table <- DESeq_result_table[DESeq_result_table$condition != cond_spec & DESeq_result_table$sgRNA_target == sgRNA_spec & DESeq_result_table$time == 10,]
   control_table$fitness
 }
@@ -53,6 +51,7 @@ DESeq_result_table <- dplyr::left_join(
       p_fitness_condition = stats::wilcox.test(
         x = fitness,
         y = get_controls(condition, sgRNA_target),
+        paired = TRUE,
         alternative = "two.sided"
         )$p.value
       ),
@@ -71,13 +70,7 @@ DESeq_result_table <- DESeq_result_table %>%
 
 
 ```{r save}
-save(DESeq_result_table, file = "../R_results_controlssgRNAs/result.Rdata")
-readr::write_tsv(DESeq_result_table, file = "../R_results_controlssgRNAs/result.tsv")
-```
-
-
-```{r include=FALSE}
-load("../R_results_controlssgRNAs/result.Rdata")
+save(DESeq_result_table, file = "../R_results_controlssgRNAs/result_paired.Rdata")
 ```
 
 # Add annotation to results tables
@@ -100,16 +93,16 @@ DESeq_result_table <- DESeq_result_table %>% left_join(annotation_2)
 ```
 
 ```{r save-annotated-files}
-write_tsv(DESeq_result_table, file="../R_results_controlssgRNAs/annotated_DESeq_result_table_comparisonsConditions.tsv")
+write_tsv(DESeq_result_table, file="../R_results_controlssgRNAs/annotated_DESeq_result_table_comparisonsConditions_pairedW.tsv")
 df_reduced_info <- unique(subset(DESeq_result_table, DESeq_result_table$time==8 | DESeq_result_table$time==14)[,c(2,28,29,30,4,20,21,23,24,26,27)])
-write_tsv(df_reduced_info, file="../R_results_controlssgRNAs/Reduced_annotated_DESeq_result_table_comparisonsConditions.tsv")
+write_tsv(df_reduced_info, file="../R_results_controlssgRNAs/Reduced_annotated_DESeq_result_table_comparisonsConditions_pairedW.tsv")
 ```
 
 ```{r wider-table}
 df_red_wide <- pivot_wider(df_reduced_info, names_from=condition, values_from=c(wmean_fitness, sd_fitness, p_fitness_adj, comb_score, p_fitness_condition, p_fitness_condition_adj))
 df_red_wide$impact_score <- (df_red_wide$wmean_fitness_CO2_30percent - df_red_wide$wmean_fitness_CO2_4percent)/sqrt(2)
 df_red_wide$combined_impact_score <- abs(df_red_wide$impact_score) * -log10(df_red_wide$p_fitness_condition_adj_CO2_30percent)
-write_tsv(df_red_wide, file="../R_results_controlssgRNAs/Wide_DESeq_result_table_comparisonsConditions.tsv")
+write_tsv(df_red_wide, file="../R_results_controlssgRNAs/Wide_DESeq_result_table_comparisonsConditions_pairedW.tsv")
 ```
 
 # Session info {.unnumbered}
