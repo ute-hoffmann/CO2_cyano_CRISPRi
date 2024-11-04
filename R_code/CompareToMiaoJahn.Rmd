@@ -1,0 +1,94 @@
+---
+title: "Analyze CRISPRi growth competition data for growth at high CO2 gas feeds, calculate adjusted p values between two conditions: compare to high-light data from Miao et al."
+author: "Ute Hoffmann (Science For Life Laboratory (KTH), Stockholm, Sweden)"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+    number_sections: true
+  html_document:
+    fig_width: 15
+    fig_height: 8
+    theme: united
+    toc: false
+    number_sections: true
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+require("knitr")
+library(tidyverse)
+library(magrittr)
+library(ggplot2)
+library(ggrepel)
+
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+# Aim of the analysis
+
+Calculation of Wilcoxon rank sum test between sgRNA fitness values between 4% CO2 data and 30% CO2 data.
+
+# Analysis
+
+In a first step, the results given by the Nextflow pipeline are loaded.
+
+```{r load-R-data}
+load("../results_controlsgRNAs/fitness/result.Rdata")
+DESeq_result_table <- subset(DESeq_result_table, DESeq_result_table$condition=="CO2_30percent")
+# adjust data set to be easily compatible with other data set
+DESeq_result_table$group <- NULL
+DESeq_result_table$reference_group <- NULL
+DESeq_result_table$baseMean <- NULL
+load("../input/CRISPRi_library_2022.Rdata")
+HL_dataset <- subset(CRISPRi_library_2022, CRISPRi_library_2022$condition=="HC, HL")[,c(names(DESeq_result_table))]
+HL_dataset$condition <- "HCHL"
+DESeq_result_table <- bind_rows(DESeq_result_table, HL_dataset)
+df_red_wide <- pivot_wider(unique(DESeq_result_table[,c("sgRNA_target", "condition", "wmean_fitness", "p_fitness_adj")]),names_from="condition", values_from=c("wmean_fitness", "p_fitness_adj"))
+```
+
+```{r}
+df_red_wide$impact_score <- (df_red_wide$wmean_fitness_CO2_30percent - df_red_wide$wmean_fitness_HCHL)/sqrt(2)
+```
+
+```{r mapping-locusTags}
+mapping_gene_locus <- read_tsv("../input/2023-02-24_mapping_trivial_names.tsv", show_col_types=FALSE)
+names(mapping_gene_locus) <- c("sgRNA_target", "locus")
+df_red_wide <- df_red_wide %>% left_join(mapping_gene_locus)
+```
+
+```{r add-annotation}
+annotation <- read_tsv("../input/annotation_locusTags_stand13012021.csv", show_col_types = FALSE)
+annotation_2 <- annotation[,c(1,2,3)]
+names(annotation_2) <- c("locus", "Gene name","Product")
+df_red_wide <- df_red_wide %>% left_join(annotation_2)
+```
+
+```{r}
+write_tsv(df_red_wide[,c(1,7,8,9,2,3,4,5,6)], file="../R_results_controlssgRNAs/result_table_comparison_HCHL.tsv")
+```
+
+```{r}
+plot_fitness_fitness <- function(df_input, y_axis, y_axis_label, x_axis, x_axis_label, filename_save){
+  df_input$diff <- "NO"
+  df_input$diff[(df_input[[x_axis]] - df_input[[y_axis]] > 2.5) | (df_input[[x_axis]] - df_input[[y_axis]] < (-2.5))] <- "YES"
+  # prepare labels for plot
+  df_input$delabel <- NA
+  df_input$delabel[df_input$diff !="NO"] <- df_input$sgRNA_target[df_input$diff != "NO"]
+  mycolors <- c("darkblue",  "#d3d3d3b2")
+  names(mycolors) <- c("YES", "NO")
+  p <- ggplot(data=df_input, aes(x=eval(parse(text=x_axis)), y=eval(parse(text=y_axis)), label=delabel,col=diff)) + geom_point(alpha=0.5, show.legend = FALSE) + 
+    theme_light() + labs(y=y_axis_label, x=x_axis_label) + theme(legend.position = "none") + geom_abline(intercept=0,slope=1,linetype="dashed",color="black") + geom_abline(intercept=-2.5, slope=1, linetype="dashed", color="black") + geom_abline(intercept=2.5, slope=1, linetype="dashed", color="black") + scale_colour_manual(values = mycolors) + geom_text_repel(fontface="italic") #+ xlim(-6, +7) +ylim(-6,+7)
+  ggsave(filename = filename_save, plot=p, width=12, height=12, units="cm")
+return(p)
+}
+
+p <- plot_fitness_fitness(df_red_wide, "wmean_fitness_CO2_30percent", y_axis_label="Weighted mean fitness 30% CO2",x_axis="wmean_fitness_HCHL", x_axis_label="Weighted mean fitness HC, HL", filename_save="../R_results_controlssgRNAs/wfitnes_plot_30percent_HCHL.pdf")
+ggsave(filename="../R_results_controlssgRNAs/wfitnes_plot_30percent_HCHL_large.pdf", width=24, height=24, units="cm")
+```
+
+# Session info {.unnumbered}
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
+
