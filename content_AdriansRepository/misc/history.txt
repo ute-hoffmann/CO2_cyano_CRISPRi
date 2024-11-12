@@ -1,0 +1,84 @@
+################################################################################
+################################################################################
+# Download genome
+
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/009/725/GCF_000009725.1_ASM972v1/GCF_000009725.1_ASM972v1_genomic.gff.gz
+
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/009/725/GCF_000009725.1_ASM972v1/GCF_000009725.1_ASM972v1_genomic.fna.gz
+
+################################################################################
+################################################################################
+# Copy relevant raw data from pipeline over
+
+mkdir raw-data
+
+cp ../CO2_cyano_CRISPRi-Ute/input/Synechocystis_v2_trimmed.fasta raw-data/guides.fasta
+cp ../CO2_cyano_CRISPRi-Ute/input/2023-02-24_mapping_trivial_names.tsv raw-data/names.tsv
+
+cp ../CO2_cyano_CRISPRi-Ute/results/fitness/result.tsv raw-data/fitness.tsv
+
+
+################################################################################
+################################################################################
+
+# 1-sanitize-positions.R
+
+Conclusion: Clear position per guide
+They use CyanoCyc annotations (downloaded smart tables)
+
+################################################################################
+
+# 2-browser-tracks.R
+
+build gene annotation tracks from CyanoCyc info
+export guide fitnesses for easier overview
+
+
+
+################################################################################
+################################################################################
+# Building a browser to visualize the results of the CRISPRi fitness pipeline
+
+mkdir browser
+cd browser
+wget https://github.com/GMOD/jbrowse-components/releases/download/v2.13.0/jbrowse-web-v2.13.0.zip
+unzip jbrowse-web*zip
+
+Copy files to borwser folder
+
+2-guides-CO2_30percent.bed
+2-guides-CO2_4percent.bed
+GCF_000009725.1_ASM972v1_genomic.fna.gz
+GCF_000009725.1_ASM972v1_genomic.gff.gz
+
+
+Set up browser in web interface
+
+npm install -g npx
+npm install -g serve
+npm install -g @jbrowse/cli
+jbrowse admin-server
+
+
+
+
+Convert wig files with tools from
+https://hgdownload.soe.ucsc.edu/admin/exe/macOSX.x86_64/
+
+~/Downloads/faToTwoBit GCF_000009725.1_ASM972v1_genomic.fna GCF_000009725.1_ASM972v1_genomic.2bit
+~/Downloads/twoBitInfo GCF_000009725.1_ASM972v1_genomic.2bit GCF_000009725.1_ASM972v1_genomic.info
+
+~/Downloads/wigToBigWig 2-cripri-CO2_30percent.wig GCF_000009725.1_ASM972v1_genomic.info 2-cripri-CO2_30percent.bigwig
+~/Downloads/wigToBigWig 2-cripri-CO2_4percent.wig GCF_000009725.1_ASM972v1_genomic.info 2-cripri-CO2_4percent.bigwig
+
+
+samtools faidx --output GCF_000009725.1_ASM972v1_genomic.fna.fnai GCF_000009725.1_ASM972v1_genomic.fna
+
+
+Setup search for RefSeq gff
+jbrowse text-index --attributes=Name,ID,locus_tag,old_locus_tag
+
+
+
+
+
