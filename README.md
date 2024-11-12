@@ -1,4 +1,4 @@
-# CO2_cyano_CRISPRi
+# Light harvesting and electron transfer are not optimally regulated in the cyanobacterium *Synechocystis* sp. PCC 6803 under very high CO2 concentrations
 
 This repository collects the analysis for the *Synechocystis* sp. PCC 6803 CRISPRi library (compare [Miao and Jahn et al., 2023](https://doi.org/10.1093/plcell/koad208)) when grown at 4% or 30% CO_2. For analysis, sequencing files were processed using the [nf-core-crispriscreen workflow](https://github.com/MPUSP/nf-core-crispriscreen).
 
