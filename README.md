@@ -1,8 +1,8 @@
-# Photosynthesis in *Synechocystis* sp. PCC 6803 is not optimally regulated under very high CO~2~
+# Photosynthesis in *Synechocystis* sp. PCC 6803 is not optimally regulated under very high CO<sub>2</sub>
 
-This repository accompanies the paper ["Photosynthesis in *Synechocystis* sp. PCC 6803 is not optimally regulated under very high CO~2~" by Carrasquer-Alvarez et al., 2025 (doi: 10.1007/s00253-025-13416-2)](https://doi.org/10.1007/s00253-025-13416-2).
+This repository accompanies the paper ["Photosynthesis in *Synechocystis* sp. PCC 6803 is not optimally regulated under very high CO<sub>2</sub>" by Carrasquer-Alvarez et al., 2025 (doi: 10.1007/s00253-025-13416-2)](https://doi.org/10.1007/s00253-025-13416-2).
 
-This repository collects the analysis for the *Synechocystis* sp. PCC 6803 CRISPRi library (compare [Miao and Jahn et al., 2023](https://doi.org/10.1093/plcell/koad208)) when grown at 4% or 30% CO_2. For analysis, sequencing files were processed using the [nf-core-crispriscreen workflow](https://github.com/MPUSP/nf-core-crispriscreen).
+This repository collects the analysis for the *Synechocystis* sp. PCC 6803 CRISPRi library (compare [Miao and Jahn et al., 2023](https://doi.org/10.1093/plcell/koad208)) when grown at 4% or 30% CO<sub>2</sub>. For analysis, sequencing files were processed using the [nf-core-crispriscreen workflow](https://github.com/MPUSP/nf-core-crispriscreen).
 
 Data is uploaded to [ShinyLib](https://m-jahn.shinyapps.io/ShinyLib/) as data set "CRISPRi_library_2024_CO2data" and can be explored interactively, 
 
